@@ -1,0 +1,19 @@
+/* Variables */
+@import "_variables";
+
+/* Bulma default */
+@import "~bulma/bulma";
+
+/* Font Awesome Icons */
+@import "~font-awesome/scss/font-awesome";
+
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Bootstrap
+//@import '~bootstrap/scss/bootstrap';
+
+
+/* Extra custom styles */
+@import "_custom";
