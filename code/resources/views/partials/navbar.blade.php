@@ -1,48 +1,84 @@
-<ul class="nav navbar-nav ml-auto mr-1">
+<div class="navbar-bg"></div>
 
-    @auth
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
 
-    <li class="nav-item dropdown">        
-        <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
-            aria-haspopup="true" aria-expanded="false">
-            <img src="/img/avatars/user.png" class="img-avatar" alt="admin@bootstrapmaster.com">
-            <span class="d-md-down-none">admin</span>
-        </a>
-        
-        <div class="dropdown-menu dropdown-menu-right">
-            
+        <div class="form-inline mr-auto">
 
-            {{-- <a class="dropdown-item" href="#">
-                <i class="fa fa-bell-o"></i> Updates<span
-                    class="badge badge-info">42</span></a> --}}
+          <ul class="navbar-nav mr-3">
+            <li>
+              <a href="#" 
+                data-toggle="sidebar" 
+                class="nav-link nav-link-lg collapse-btn"> 
 
-
-
-            <div class="dropdown-header text-center">
-                <strong>Settings</strong>
-            </div>
-            <a class="dropdown-item" href="#">
-                <i class="icon-user"></i>
-                Profile
-            </a>
-
-
-            <div class="dropdown-header text-center">
-                <strong>Account</strong>
-            </div>
-            <a class="dropdown-item" href="{{ route('logout')}}" 
-                onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-                <i class="icon-lock"></i> 
-                Logout
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-
+                <i data-feather="align-justify"></i>
+              </a>
+            </li>
+          </ul>
 
         </div>
-    </li>
 
-    @endauth
-</ul>
+
+        <ul class="navbar-nav navbar-right">
+         
+          <li class="dropdown">
+
+              <a href="#" data-toggle="dropdown"
+                  class="nav-link dropdown-toggle nav-link-lg nav-link-user"> 
+
+                <img alt="image" src="/assets/img/{{ Auth::user()->role }}.png" data-src="/img/avatars/user.png"
+                      class="user-img-radious-style"> 
+
+                <span class="d-sm-none d-lg-inline-block"></span>
+
+              </a>
+
+            <div class="dropdown-menu dropdown-menu-right pullDown">
+
+              <div class="dropdown-title">
+                
+                <span class="d-block mb-0">{{Auth::user()->username}}</span>
+             
+                <span class="small tm-0">{{Auth::user()->role}}</span>
+              </div>
+
+              <!-- <div class="dropdown-divider"></div> -->
+
+                <a href="{{ route('profile.index') }}" 
+                    class="dropdown-item has-icon"> 
+
+                    <i class="far fa-user"></i> Account
+                </a> 
+
+                 <a href="{{ route('profile.changepw') }}" 
+                    class="dropdown-item has-icon"> 
+
+                    <i class="fas fa-key" >
+                    </i> Change Password
+                </a> 
+
+
+                <a href="{{ route('logout')}}" 
+                  class="dropdown-item has-icon text-danger" 
+                  onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+              
+                <form id="logout-form" 
+                    action="{{ route('logout') }}" 
+                    method="POST" 
+                    style="display: none;">
+                    @csrf
+                </form>
+
+    
+
+            </div>
+          </li>
+        </ul>
+
+      </nav>
+
+

@@ -8,7 +8,7 @@ use \Hashids\Hashids;
 
 class Courses extends Model
 {
-    protected $table ='courses';
+    protected $table ='course';
     protected $guarded = ['id','created_at','updated_at'];
 
     // protected $fillable = [

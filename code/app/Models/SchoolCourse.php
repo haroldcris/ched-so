@@ -9,8 +9,8 @@ class SchoolCourse extends Model
     protected $table = 'school-course';
 
 
-    public function Level()
+    public function level()
     {
-    	return $this->belongsTo('App\Models\Level','levelId','id');
+    	return $this->belongsTo('\App\Models\Level','levelId','id');
     }
 }

@@ -3,7 +3,7 @@
     [
         'text'  => 'Menu Item',
         'route' => route(''),
-        'icon'  => 'icon-user'
+        'icon'  => 'icon-user',
     ])
 --}}
 

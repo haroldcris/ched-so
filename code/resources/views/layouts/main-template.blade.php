@@ -1,113 +1,106 @@
- <!DOCTYPE html>
- <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <meta name="description" content="CHED-SO Application">     
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
- <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="CHED-SO Application">     
-    <link rel="shortcut icon" href="img/favicon.png">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>{{ config('app.name') }} v{{ env('APP_VERSION') }} @yield('title')</title>
 
-    <title>{{ config('app.name') }} v{{ env('APP_VERSION') }} @yield('title')</title>
+  <!-- General CSS Files -->
+  <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
+  <link rel="stylesheet" href="/assets/css/app.min.css">
+  <link rel="stylesheet" href="/assets/bundles/izitoast/css/iziToast.min.css">
+  <link rel="stylesheet" href="/assets/bundles/select2/dist/css/select2.min.css">
+  
+    <!-- Template CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/custom.css">
 
-     @include('partials.head')
- </head>
- 
- {{-- 
- <!-- BODY options, add following classes to body to change options
- 
- // Header options
- 1. '.header-fixed'					- Fixed Header
- 
- // Brand options
- 1. '.brand-minimized'       - Minimized brand (Only symbol)
- 
- // Sidebar options
- 1. '.sidebar-fixed'					- Fixed Sidebar
- 2. '.sidebar-hidden'				- Hidden Sidebar
- 3. '.sidebar-off-canvas'		- Off Canvas Sidebar
- 4. '.sidebar-minimized'			- Minimized Sidebar (Only icons)
- 5. '.sidebar-compact'			  - Compact Sidebar
- 
- // Aside options
- 1. '.aside-menu-fixed'			- Fixed Aside Menu
- 2. '.aside-menu-hidden'			- Hidden Aside Menu
- 3. '.aside-menu-off-canvas'	- Off Canvas Aside Menu
- 
- // Breadcrumb options
- 1. '.breadcrumb-fixed'			- Fixed Breadcrumb
- 
- // Footer options
- 1. '.footer-fixed'					- Fixed footer
- 
- -->
---}}
+  <link rel="stylesheet" type="text/css" href="/css/datepicker.css">
+  <script src="/js/datepicker.min.js" ></script>
 
- <body class="app header-fixed sidebar-fixed .sidebar-off-canvas aside-menu-fixed aside-menu-hidden">
-     <header class="app-header navbar">
-         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">☰</button>
-         <a class="navbar-brand" href="/"></a>
-         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">☰</button>
+    @yield('head')
 
-         @include('partials.navbar')
+</head>
 
-     </header>
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
 
-     <div class="app-body">
-        {{ Auth::user()->role }}
+      @include('partials.navbar')
 
-         <div class="sidebar">            
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="index.html"> 
+            	<img alt="image" src="/img/logo.png" class="header-logo" /> 
+            	<span class="logo-name"></span>
+            </a>
+          </div>
+          <div class="sidebar">
 
-            @if(Auth::user()->role = App\Models\Role::Admin)
+          @include('partials.sidebar.' . Auth::user()->role .   '-sidebar')
 
-                @include('partials.sidebar.admin-sidebar')
 
-            @elseif (Auth::user()->role = App\Models\Role::HEI)
+          
+          </div>
+        </aside>
+      </div>
+             
+      
+
+      <!-- Main Content -->
+      <div class="main-content" >
+
+        <section class="section">
+          <div class="section-body container">
+            <!-- add content here -->
             
-            
-            @endif
+            @yield ('content')
+
+          </div>
+        </section>
 
 
 
-         </div>
+      </div>
+      
+      @yield('modal')
 
-         <!-- Main content -->
-         <main class="main">
+      @include ('partials.footer')            
 
-             <!-- Breadcrumb -->
-             @include('partials.breadcrumb')
+    </div>
+  </div>
 
+  <script src="/assets/js/app.min.js"></script>
+  <script src="/assets/js/scripts.js"></script>
+  <script src="/assets/bundles/izitoast/js/iziToast.min.js"></script>
+  <script src="/assets/js/custom.js"></script>
+  
+  <script src="/assets/bundles/jquery-pwstrength/jquery.pwstrength.min.js"></script>
+  <script src="/assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="/assets/bundles/select2/dist/js/select2.full.min.js"></script>
 
-             @if(Session::has('message'))
-                <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading">{{ Session::get('message') }}</h4>
-                </div>
-             @endif
+  
+  <!-- Page Specific JS File -->
+  
+  
+  
+  @if(session('message'))
+      <script>
+          $(function() {
+              showToast("{{ session('message') }}");
+          });
+      </script>            
 
-             <div class="container-fluid">
-                 <div class="animated fadeIn">
-                     @yield('content')
-                 </div>
+  @endif
 
-             </div>
-             <!-- /.conainer-fluid -->
-         </main>
+  @yield('script')
+  
+</body>
 
-
-
-     </div>
-     @include('partials.footer')
-
-     @include('partials.script')
-     
-
-     <!-- GenesisUI main scripts -->
-     <script src="/js/app.js"></script>
-
-
-     @yield('script')
-
- </body>
-
- </html>
+</html>

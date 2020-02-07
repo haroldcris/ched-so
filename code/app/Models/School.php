@@ -3,27 +3,25 @@
 namespace App\Models;
 
 use App\HashGenerator;
+use App\Traits\HashTraits;
 use Illuminate\Database\Eloquent\Model;
 use \Hashids\Hashids;
 
+
 class School extends Model
 {
+    use HashTraits;
+
     protected $table ='school';
     protected $guarded = ['id','created_at','updated_at'];
-
-    // protected $fillable = [
-    //     'hei_type', 'address', 'gov_regnumber', 'contact_person', 'contact_number'
-    // ];
-
-
-    public function hashId()
+   
+    public function offeredCourse()
     {
-        return HashGenerator::Encode($this->id);
-    }
-    
+    	return $this->belongsToMany('\App\Models\Course', 'school-course', 'schoolId', 'courseId')                                
+    				->withPivot('levelId');
 
-    public static function decodeHash($value)
-    {
-        return HashGenerator::Decode($value);
+    	// return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
     }
+
+
 }

@@ -16,7 +16,7 @@ class CreateSchoolTable extends Migration
         Schema::create('school', function (Blueprint $table) {
             $table->bigIncrements('id');
             
-            $table->string('code',20);
+            $table->string('code',20)->default('')->unique();
             $table->string('type', 20)->default('');  // LUC, Private, CHED
             $table->string('name',200); //Name of School
             

@@ -5,26 +5,31 @@ namespace App\Models;
 use App\HashGenerator;
 use Illuminate\Database\Eloquent\Model;
 use \Hashids\Hashids;
+use App\Traits\HashTraits;
+use App\User;
 
 class Application extends Model
 {
+    use HashTraits;
+
     protected $table ='application';
     protected $guarded = ['id','date_filed'];
 
-    // protected $fillable = [
-    //     'hei_type', 'address', 'gov_regnumber', 'contact_person', 'contact_number'
-    // ];
-
-    
-
-
-    public function hashId()
+    public function TrackingHashId() 
     {
-        return HashGenerator::Encode($this->id);
+        $alphabet = "123456789ACEFGHKLRSTUVXYZ";  // OO W  P  I J Q  BdMN P ryhme
+
+        $hash = new Hashids(HashGenerator::$HashSalt, 6 ,$alphabet);
+
+        return $hash->encode($this->id);
     }
 
-    public static function decodeHash($value)
+
+    public static function IdFromHash($hash)
     {
-        return HashGenerator::Decode($value);
+        $alphabet = "123456789ACEFGHKLRSTUVXYZ";  // OO W  P  I J Q  BdMN P ryhme
+    	$hash = new Hashids(HashGenerator::$HashSalt, 6 ,$alphabet);
+        return $hash->decode($hash);
     }
+
 }

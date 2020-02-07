@@ -16,7 +16,7 @@ class CreateApplication extends Migration
         Schema::create('application', function (Blueprint $table) {
             $table->bigIncrements('id');         
 
-            $table->string('school_code',20);
+            $table->bigInteger('schoolId');
             $table->string('school_type', 20);  // LUC, Private, CHED
             $table->string('school_name',200); //Name of School
             

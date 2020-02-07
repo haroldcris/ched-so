@@ -14,4 +14,8 @@ class Role
 	const HEI = 'hei';
 
 	const Supervisor = 'supervisor';
+
+
+	const AllRoles = ['admin', 'hei', 'supervisor'];
+	
 }

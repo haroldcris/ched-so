@@ -1,1 +1,74 @@
-supervisor here
+@extends('layouts.main-template')
+
+@section('title', '| Dashboard')
+
+
+@section('content')
+<div class="columns is-marginless is-multiline">
+	<div class="column is-12">
+
+		@include('partials.session-message')
+
+		@component('components.notification', 
+		[ 'style' => 'success', 
+		'class' => 'column is-4 is-offset-4 has-text-centered'])
+		<!--  This is a notification -->
+		@endcomponent
+
+
+		<div class="row ">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Filed Application</h5>
+
+
+                          <h2 class="mb-3 font-18">{{  $filed }}</h2>
+
+
+                          <a href="{{ route('supervisorfiledso.index') }}" class="btn btn-outline-primary">Details</a>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="/img/pending.jpg" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15"> Archived Application</h5>
+
+
+                          <h2 class="mb-3 font-18">{{  $validated }}</h2>
+
+
+                          <a href="{{ route('supervisorvalidatedso.index') }}" class="btn btn-outline-primary">Details</a>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="/img/archive.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+	@endsection

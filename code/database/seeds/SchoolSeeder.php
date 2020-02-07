@@ -15,6 +15,21 @@ class SchoolSeeder extends Seeder
         $data = $this->getData();
         
         $table->insert($data);
+
+        
+        // select concat(substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand()*36+1, 1),
+        //       substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand()*36+1, 1),
+        //       substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand()*36+1, 1),
+        //       substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand()*36+1, 1),
+        //       substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand()*36+1, 1),
+        //       substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand()*36+1, 1),
+        //       substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand()*36+1, 1),
+        //       substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand()*36+1, 1)
+        //      ) as LicensePlaceNumber;
+
+
+        //update school set type = 
+        //ELT(0.5 + RAND() * 3, 'LUC', 'CHED', 'Private')
     }
 
     static function getData()

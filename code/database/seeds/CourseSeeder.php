@@ -210,7 +210,6 @@ class CourseSeeder extends Seeder
 			['code' => '307210', 'description' => 'Folklore'], 
 			['code' => '307211', 'description' => 'Southeast Asian Studies'], 
 			['code' => '307212', 'description' => 'Culture Heritage Studies'], 
-			['code' => '309900', 'description' => 'Other Social and Behavioral Science'], 
 			['code' => '309900', 'description' => 'Business Administration'], 
 			['code' => '340102', 'description' => 'Commercial Science/Arts'], 
 			['code' => '340104', 'description' => 'Business Management'], 
