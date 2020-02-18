@@ -24,6 +24,7 @@ class SchoolController extends Controller
         ];
 
 
+
         if(isset($item)) 
         {
             //Modify the Rules for Updating Record

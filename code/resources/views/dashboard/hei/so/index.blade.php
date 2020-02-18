@@ -39,8 +39,7 @@
                             <tr>
                                 <th>Application Id</th>
                                 <th>Program</th>
-                                <th>Date Filed</th>
-                                <th>Status</th>
+                                <th>Date Created</th>
                                 
                                 <th>Action</th>
                             </tr>
@@ -62,11 +61,7 @@
                                 </td>
 
                                 <td>
-                                    {{ \Carbon\Carbon::parse($item->filed_at)->format('d M Y h:i A') }}
-                                </td>
-
-                                <td>
-                                    
+                                    {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y h:i A') }}
                                 </td>
 
                                 <!-- <td class="small">
@@ -90,7 +85,7 @@
                                         </button>  
                                         
 
-                                        <a href="{{ route('heiso.edit', ['hash' => $item->hashId()]) }}" 
+                                        <a href="{{ route('heiso.edit', ['hash' => $item->TrackingHashId()]) }}" 
                                             data-toggle="tooltip" data-title="Edit" data-original-title="" title="" 
                                             class="btn btn-sm btn-info">
                                             <i class="fas fa-edit"></i>

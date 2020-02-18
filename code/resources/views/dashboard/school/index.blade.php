@@ -13,13 +13,14 @@
                         href="{{ route('school.create') }}" >
                         <i class="fa fa-plus"></i>
                         Create New Record
-                    </a>
+                    </a> 
 
                     <button class="btn btn-info"
                             data-toggle="modal" data-target="#searchModal" >
                         <i class="fa fa-search"></i>
                         Search
                     </button>
+                    
                 </div>
             </div>
             <div class="card-body">
@@ -57,9 +58,9 @@
                                             <i class="fas fa-layer-group"></i> Type: {{ $item->type}}
                                         </div> -->
                                         
-                                        <div class="">
+                                        <!-- <div class="">
                                             <i class="far fa-file-alt fa-fw"></i> Recognition #: {{ $item->recognition_number}}
-                                        </div>                                    
+                                        </div>     -->                                
 
                                         <div class=""> 
                                             <i class="far fa-envelope fa-fw"></i> Address: {{ $item->town }}, {{ $item->province}}</div>

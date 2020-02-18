@@ -10,7 +10,14 @@
 
             <div class="card-header">
                 <h4>Validated SO Applications</h4>
+
+                <button class="btn btn-info"
+                            data-toggle="modal" data-target="#searchModal" >
+                        <i class="fa fa-search"></i>
+                        Search
+                    </button> 
             </div>
+
 
             <div class="card-body">
                 
@@ -112,46 +119,6 @@
 
 
     @include('components.dialog.delete')
-
-
-
-
-
-    @component('components.dialog.search')
-        <div class="form-group">
-            
-            <label>Enter Search Criteria</label>
-            <div class="input-group">
-
-              <input type="text" 
-                    class="form-control" 
-                    placeholder="" 
-                    name="search-data" 
-                    id="search-data" autofocus />
-
-                <div class="input-group-append">
-                    <button class="btn btn-info" 
-                        onclick="search()" 
-                        id= 'search-button'>
-                      <i class="fas fa-search"></i> Search
-                    </button>
-                </div>
-            </div>
-        </div>                                
-            
-        <table class="table table-striped table-bordered" id='search-result'>
-            <thead>
-                <tr>
-                    <th>Course Code</th>
-                    <th>Description</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>    
-        </table>
-    @endcomponent
 
 
 @endsection

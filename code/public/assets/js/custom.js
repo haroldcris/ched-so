@@ -43,9 +43,22 @@ function showToast(message, target){
       progressBarColor: 'rgb(0, 255, 184)',
     };
 
-    iziToast.show(option);     	
+    iziToast.show(option);
 }
-            
-            
-    
+
+
+function showToastError(message, target){
+  var option = {
+     title: '',
+     message :  message,
+     color: 'red', // blue, red, green, yellow
+     position: 'topCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+     timeout: 5000,
+     theme: 'light',
+     icon: 'fas fa-exclamation-triangle',
+     progressBarColor: 'rgb(255, 0, 0)',
+   };
+
+   iziToast.show(option);     	
+}
 

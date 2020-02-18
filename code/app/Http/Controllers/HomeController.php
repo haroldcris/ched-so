@@ -42,11 +42,14 @@ class HomeController extends Controller
                                         ->where('status','deficient')
                                         ->firstOrFail();
 
+                $theme = 'theme-green';
+
     			return view('dashboard.admin', ['filed' => $filed->Total,
                                                 'user' => $user->Total, 
                                                 'school' =>$school->Total, 
                                                 'course' => $course->Total,
-                                                'deficient' =>$deficient->Total]);
+                                                'deficient' =>$deficient->Total,
+                                                'theme' =>$theme]);
 
 
     		case Role::HEI:
@@ -65,9 +68,12 @@ class HomeController extends Controller
                                         ->where('status','deficient')
                                         ->firstOrFail();
 
+                $theme = 'theme-cyan';
+
     			return view('dashboard.hei', ['filed' => $filed->Total, 
                                               'released' => $released->Total, 
-                                              'deficient' => $deficient->Total]);
+                                              'deficient' => $deficient->Total, 
+                                              'theme'=> $theme]);
 
 
     		case Role::Supervisor:
@@ -84,10 +90,13 @@ class HomeController extends Controller
                                         ->where('status','deficient')
                                         ->firstOrFail();
 
+                $theme = 'theme-black';
+
 
     			return view('dashboard.supervisor', ['filed'=> $filed->Total, 
                                                     'validated' =>$validated->Total, 
-                                                    'deficient' => $deficient->Total]);
+                                                    'deficient' => $deficient->Total, 
+                                                    'theme' => $theme]);
 
             default:
                 return 'No Assigned Role';

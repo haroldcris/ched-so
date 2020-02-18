@@ -26,7 +26,23 @@
 
 </head>
 
-<body>
+<body class="light light-sidebar 
+
+  @if (\Auth::user()->role == "admin")
+      
+      theme-green
+
+  @elseif (\Auth::user()->role == "hei")
+
+      theme-cyan
+
+  @elseif (\Auth::user()->role == "supervisor")
+     
+      theme-green
+
+      @endif 
+
+">
   <div class="loader"></div>
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
@@ -82,7 +98,7 @@
   <script src="/assets/js/custom.js"></script>
   
   <script src="/assets/bundles/jquery-pwstrength/jquery.pwstrength.min.js"></script>
-  <script src="/assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  {{-- <script src="/assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script> --}}
   <script src="/assets/bundles/select2/dist/js/select2.full.min.js"></script>
 
   

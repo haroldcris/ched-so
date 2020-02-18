@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\SchoolCourse;
 use Illuminate\Http\Request;
 use App\Models\Status;
+use App\Models\Student;
 use \Carbon\Carbon;
 
 
@@ -58,7 +59,7 @@ class HeiSoController extends Controller
 							->orderBy('level.code')
 							->orderBy('course.description')
 							->get(); 
-				
+		
         return view('dashboard.hei.so.create', ['program' => $program]);    
 	}
 
@@ -67,10 +68,55 @@ class HeiSoController extends Controller
 
   	public function store(Request $request)
   	{
-  		$students = json_decode($request->input('students'));
-  		dd($students);
+
   		$request->validate($this->rules());
 
+
+		$students = json_decode($request->input('students'));  		
+		$record = $this->PrepareFieldsToBeSaved($request);
+
+		//dd($students, $record);
+
+		$app = Application::create($record);
+
+		foreach($students as $student){
+			$student->applicationId = $app->id;
+			\App\Models\Student::create((array)$student);
+		}
+			
+
+
+  		$request->session()->flash('message', 'Record has been created');
+
+		return redirect()->route('heiso.index');
+ 	}	
+
+
+ 	public function edit($hash)
+ 	{
+ 		// Convert Hash to Id;
+ 		$id = Application::IdFromHash($hash);
+ 		$data = Application::where('id', $id)->firstOrFail();
+ 		$students = Student::where('applicationId', $id)->get();
+
+ 		$program = SchoolCourse::select('school-course.id as id', 'course.description', 'course.code', 
+										'level.id as levelId', 'level.description as levelDescription')
+							->join('school','school.id', '=','school-course.schoolId')
+							->join('course', 'course.id', '=', 'school-course.courseId')
+							->join('level', 'level.id','=', 'school-course.levelId')
+							->where('school.code', \Auth::user()->schoolcode)
+							
+							->orderBy('level.code')
+							->orderBy('course.description')
+							->get();
+				
+        return view('dashboard.hei.so.edit', ['program' => $program, 'data' => $data, 'students' => $students]);    
+ 	}
+
+
+
+ 	public function PrepareFieldsToBeSaved($request)
+ 	{
 
   		$data = \App\Models\SchoolCourse::select('course.id',
                                                     'course.code as courseCode',
@@ -85,7 +131,8 @@ class HeiSoController extends Controller
                                                     'school.name as schoolName',
                                                     'school.province as schoolProvince',
                                                     'school.town as schoolTown',
-                                                    'school.recognition_number',
+                                                    
+                                                   
 
                                                     'school.updated_by',
                                                     'school.updated_at',
@@ -94,6 +141,7 @@ class HeiSoController extends Controller
                             ->join('school','school.id', '=','school-course.schoolId')
                             ->join('course', 'course.id', '=', 'school-course.courseId')
                             ->join('level', 'level.id','=', 'school-course.levelId')
+                        
                             ->where('school-course.id', $request->input('program'))
                             ->firstOrFail(); 
 
@@ -111,8 +159,7 @@ class HeiSoController extends Controller
 			'school_province'  			=>  $data->schoolProvince,
 			'school_town'  				=>  $data->schoolTown,
 
-			'school_recognition_number' =>  $data->recognition_number,
-			
+			'recognition_number' =>  $request->input('recognition_number'),
 			'level_code'			=> $data->levelCode,
 			'level_description'		=> $data->levelDescription,
 			'course_code'  			=>  $data->courseCode,
@@ -120,6 +167,8 @@ class HeiSoController extends Controller
 
 
 			'graduation_date'   	=>  \Carbon\Carbon::parse($request->input('graduation_date'))->format('Y-m-d'),
+
+			'recognition_number'	=> $request->input('recognition_number', ''),
 			
 			//'student_count'   		=>  '',
 			//'so_number'   			=>  '',
@@ -151,41 +200,31 @@ class HeiSoController extends Controller
 			];
 
 		//dd($record);
+		return $record;
+ 	}
 
-		Application::create($record);
 
-  		$request->session()->flash('message', 'Record has been created');
+ 	public function update(Request $request, $hash)
+	{
+		// dd($request->all());
 
+		$request->validate($this->rules());
+
+		$data = $this->PrepareFieldsToBeSaved($request);
+
+		// Add additional Fields
+		$data = array_merge($data, ['updated_by' => \Auth::user()->username]);
+		
+		//Get The Item to Be updated
+		$item = Application::where('id',$request->input('id'))->firstOrFail();
+		$item->update($data);
+
+		$request->session()->flash('message', 'Record has been successfully Updated');
 		return redirect()->route('heiso.index');
- 	}	
+	}
 
 
- 	public function edit($hash)
- 	{
- 		$id = Application::decodeHash($hash);
 
- 		// dd($id, $hash);
- 		$data = Application::where('id', $id)->firstOrFail();
-
- 		$program = SchoolCourse::select('school-course.id as id', 'course.description', 'course.code', 
-										'level.id as levelId', 'level.description as levelDescription')
-							->join('school','school.id', '=','school-course.schoolId')
-							->join('course', 'course.id', '=', 'school-course.courseId')
-							->join('level', 'level.id','=', 'school-course.levelId')
-							->where('school.code', \Auth::user()->schoolcode)
-							
-							->orderBy('level.code')
-							->orderBy('course.description')
-							->get(); 
-				
-        return view('dashboard.hei.so.edit', ['program' => $program, 'data' => $data]);    
- 	}
-
-
- 	public function update()
- 	{
-
- 	}
 
 
 

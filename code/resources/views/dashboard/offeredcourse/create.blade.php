@@ -8,7 +8,7 @@
         <div class="card">
 
             <div class="card-header bg-success">
-                <h4>Create New Program</h4>
+                <h4>Assign New Program</h4>
             </div>
             
             <div class="card-body">
@@ -20,21 +20,21 @@
                     @csrf
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-md-right">Program Code</label>
+                        <label class="col-md-3 col-form-label text-md-right">School Code</label>
 
                         <div class="col-md-4">
-                            @include('components.form.textbox', ['field'        => 'code', 
-                                                                 'fieldValue'  => old('code'),
+                            @include('components.form.textbox', ['field'        => 'schoolId', 
+                                                                 'fieldValue'  => old('schoolId'),
                                                                  'required'     => '', 
                                                                  'autofocus'    => ''])
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-md-right">Program Description</label>
+                        <label class="col-md-3 col-form-label text-md-right">Program Code</label>
                         <div class="col-md-9">
-                            @include('components.form.textbox', ['field' => 'description', 
-                                                                 'fieldValue'  => old('description'),
+                            @include('components.form.textbox', ['field' => 'courseId', 
+                                                                 'fieldValue'  => old('courseId'),
                                                                  'required' => '' ])                            
                         </div>
                     </div>

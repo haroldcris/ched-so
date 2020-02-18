@@ -17,9 +17,10 @@ class HeiFiledSoController extends Controller
   
 	public function index()
 	{
-				$data = Application::where('schoolId', \Auth::user ()->school->id)
-									->where('status','<>', Status::Draft)
-									->orderbyDesc('created_at')->paginate(20);	
+		$data = Application::where('schoolId', \Auth::user ()->school->id)
+							->where('status','<>', Status::Draft)
+							->orderbyDesc('created_at')->paginate(20);	
+
 		
 		return view('dashboard.hei.so.filed', ['data'=> $data]);
 	}

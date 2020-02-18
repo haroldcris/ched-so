@@ -13,7 +13,9 @@ class Application extends Model
     use HashTraits;
 
     protected $table ='application';
+
     protected $guarded = ['id','date_filed'];
+
 
     public function TrackingHashId() 
     {
@@ -25,11 +27,12 @@ class Application extends Model
     }
 
 
-    public static function IdFromHash($hash)
+    public static function IdFromHash($hashCode)
     {
         $alphabet = "123456789ACEFGHKLRSTUVXYZ";  // OO W  P  I J Q  BdMN P ryhme
-    	$hash = new Hashids(HashGenerator::$HashSalt, 6 ,$alphabet);
-        return $hash->decode($hash);
+    	$hash = new Hashids(HashGenerator::$HashSalt, 6 ,$alphabet);        
+        return $hash->decode($hashCode);
     }
 
+    
 }

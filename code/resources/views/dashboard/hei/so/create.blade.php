@@ -2,8 +2,6 @@
 
 @section('head')
 
-<script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
 @endsection 
 
 
@@ -26,6 +24,7 @@
                     action="{{ route ('heiso.store') }}" >
 
                     @csrf
+                    <input type="hidden" name="students" id="students" value="{{ old('students', '') }}" />
 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label text-md-right">Program</label>
@@ -63,6 +62,20 @@
 
                     </div>
 
+
+                    
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label text-md-right">Government Recognition Number</label>
+
+                        <div class="col-md-9">
+                             @include('components.form.textbox', ['field' => 'recognition_number', 
+                                                                 'fieldValue'  => old('recognition_number'),
+                                                                 'required' => '' ])          
+                        </div>
+                    </div>
+
+                    
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label text-md-right">Remarks</label>
                         <div class="col-md-9">
@@ -72,43 +85,35 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="students" id="students">
+                    
 
 
                     <div class="card-footer text-right">    
-                   <button class="btn btn-lg btn-primary" type="button"   
-                        data-toggle="modal" data-target="#basicModal"
-                         onclick = "$('#modal-dialog').modal({'backdrop':'static'});">
+                        <button class="btn btn-lg btn-primary" type="button"   
+                                data-toggle="modal" data-target="#basicModal"
+                                onclick = "showAddDialog()">
                             <i class="fa fa-plus"></i>
                             Add Applicant
                         </button>
                     </div>
 
-                    <hr/>
-
-
                     <div class="table-responsive">
                          <table class="table table-striped table-bordered">
                             <thead>
-                               
                                  <th>Lastname</th>
                                  <th>Firstname</th>
                                  <th>Middlename</th>
                                  <th>NameExtension</th>
                                  <th>Birthdate</th>
-
+                                 <th>Action</th>
                             </thead>
+
                            <tbody id="applicants">
-                                
-
-
                            </tbody>
-
                         </table>
-                   
-                    </div>
                     </div>
 
+                    <hr/>
 
                     <div class="card-footer text-right">
                         <a class="btn btn-light btn-lg" 
@@ -139,87 +144,9 @@
 
 @endsection
 
-
-@section('script')
-    <script>
-       
-
-       (function renderCalendar () {
-             const input = document.querySelector('.datepicker');
-             const datepicker = new TheDatepicker.Datepicker(input);
-
-             datepicker.options.setInputFormat('F d,  Y');
-             datepicker.options.setDropdownItemsLimit(1950,2020);
-             datepicker.zIndex = 2048;
-             datepicker.render();            
-
-         })();
-
-
-        var col = [];
-
-        function addStudent(){
-
-            if (col.length >= 20)
-            {
-                alert('You have exceeded the allowed number of Students');
-                return;
-            }
-
-            var student = Object();
-
-            student.lastname = document.getElementById('lastname').value;
-            student.firstname = document.getElementById('firstname').value;
-            student.middlename = document.getElementById('middlename').value;
-            student.nameextension = document.getElementById('nameextension').value;
-            student.birthdate = document.getElementById('birthdate').value;
-            col.push(student);
-            $('#students').val(JSON.stringify(col));
-
-            //console.log(col);
-            $('#modal-dialog').modal('hide');
-
-            showData();
-            resetData();            
-        }
-
-
-        function resetData()
-        {
-            $('#lastname').val('');
-            $('#firstname').val('');
-            $('#middlename').val('');
-            $('#nameextension').val('');
-            $('#birthdate').val('');
-        }
-
-        function showData()
-        {
-            $('#applicants').html('');
-
-            $.each(col, function (index,value) {
-
-               $('#applicants').append('<tr>' +
-                                        '<td>' + value.lastname + '</td>' +
-                                        '<td>' + value.firstname + '</td>' +
-                                        '<td>' + value.middlename + '</td>' +
-                                        '<td>' + value.nameextension + '</td>' +
-                                        '<td>' + value.birthdate + '</td></tr>' );
-             
-
-            });
-        }
-
-
-    </script> 
-
-@endsection
-
-
-
 @section('modal')
 
-@component('components.dialog.modal')
+    @component('components.dialog.modal')
         <h5>Add Applicant</h5>
         <br>
         <p class='dialog-body h5 text-dark'></p>
@@ -229,7 +156,8 @@
                        <div class="col-md-9">
                             @include('components.form.textbox', ['field' => 'lastname', 
                                                                 'fieldValue'  => old('lastname'),
-                                                                'id' =>'lastname'
+                                                                'id' =>'lastname', 
+                                                                'autofocus' => 'true'
                                                                  ])                            
                         </div>
                     </div>
@@ -270,11 +198,12 @@
                             @include('components.form.error', ['field' => 'role'])
                         </div>
                     </div>
+                    
                     <div class="form-group row">
                        <label class="col-md-3 col-form-label text-md-right">Birthdate</label>
                        <div class="col-md-9">
                             <input class="form-control datepicker @error('birthdate') is-invalid @enderror" 
-                                type="text" 
+                                type="date" 
                                 placeholder="" 
                                 name="birthdate" 
                                 value = "{{ old('birthdate') }}"    
@@ -289,7 +218,7 @@
 
     @slot('footer')
 
-            <button class="btn btn-success" onclick="addStudent()">
+            <button id="addStudentBtn" class="btn btn-success" onclick="addStudent()">
              <!--   <i class=""></i> -->
                Add
             </button>&nbsp;&nbsp;
@@ -297,5 +226,155 @@
         @endslot
     @endcomponent 
 @endsection
+
+
+
+
+
+@section('script')
+
+    <script>
+         $(function() {
+                $("body").delegate(".datepicker", "focusin", function(){
+                    let input = document.querySelector('.datepicker');
+
+                    console.log(typeof input.datepicker);
+                    if(typeof input.datepicker == 'undefined')
+                    {
+                        
+                        let datepicker = new TheDatepicker.Datepicker(input);
+
+                        datepicker.options.setInputFormat('F d,  Y');
+                        datepicker.options.setDropdownItemsLimit(1950,2020);
+                        datepicker.zIndex = 99999;
+                        datepicker.render();                       
+                    }
+
+                    input.datepicker.render();
+                });
+            });
+
+    </script>
+
+    <script>
+        var col = [];
+
+
+        function showAddDialog()
+        {
+            if (col.length >= 3)
+            {
+                showToastError('You have exceeded the allowed number of Students');
+                return;
+            }
+
+            $('#modal-dialog').modal({'backdrop':'static'});
+            $('#modal-dialog').find('#lastname').focus();
+                        
+            // let datepicker = new TheDatepicker.Datepicker(input);
+            // datepicker.options.setInputFormat('F d,  Y');
+            // datepicker.options.setDropdownItemsLimit(1950,2020);
+            // datepicker.zIndex = 2048;
+            // datepicker.render();         
+        }
+
+
+
+        function hasBrokenRules()
+        {
+            let control;
+
+            control = document.getElementById('lastname');
+            if (control.value == ""){
+                return showError(control,'Lastname is required');
+            }
+
+            control = document.getElementById('firstname');
+            if (control.value == ""){
+                return showError(control,'Firstname is required');
+            }
+
+            control = document.getElementById('birthdate');
+            if (control.value == ""){
+                return showError(control, 'Birthdate is required');
+            }
+
+            return false;
+        }
+
+
+
+        function showError(control, errorMessage){            
+            control.setAttribute('class',control.getAttribute('class') + ' is-invalid');
+            control.focus();
+            showToastError(errorMessage);
+            return true;
+        }
+
+
+
+        function addStudent()
+        {
+            if( hasBrokenRules() ) 
+                return;
+
+            //show Loading Icon
+            let ctrl = document.getElementById('addStudentBtn');
+            //ctrl.setAttribute('class',ctrl.getAttribute('class') + ' btn-progress');
+            
+            var student = Object();
+
+            student.lastname = document.getElementById('lastname').value;
+            student.firstname = document.getElementById('firstname').value;
+            student.middlename = document.getElementById('middlename').value;
+            student.nameextension = document.getElementById('nameextension').value;
+            student.birthdate = document.getElementById('birthdate').value;
+
+            col.push(student);
+            $('#students').val(JSON.stringify(col));
+            $('#modal-dialog').modal('hide');
+
+            showToast('Added New Student');
+            showData();
+            resetData();            
+        }
+
+
+
+        function resetData()
+        {
+            $('#lastname').val('');
+            $('#firstname').val('');
+            $('#middlename').val('');
+            $('#nameextension').val('');
+            $('#birthdate').val('');
+        }
+
+
+
+        function showData()
+        {
+            $('#applicants').html('');
+
+            $.each(col, function (index,value) {
+
+               $('#applicants').append('<tr>' +
+                                        '<td>' + value.lastname + '</td>' +
+                                        '<td>' + value.firstname + '</td>' +
+                                        '<td>' + value.middlename + '</td>' +
+                                        '<td>' + value.nameextension + '</td>' +
+                                        '<td>' + value.birthdate + '</td>' + 
+                                        '<td><button type="button" data-index="' + index + '" class="btn btn-sm btn-danger" onclick = ""> <i class="fas fa-trash"></i> </button> </td> ' +
+                                        '</tr>' );
+             
+
+            });
+        }
+
+
+    </script> 
+
+@endsection
+
 
 

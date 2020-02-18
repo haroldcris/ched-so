@@ -13,9 +13,9 @@
 
 
               <div class="card-header">
-                  <div class="row mx-auto">
-                      <img src="/img/ched.png">                    
-                  </div>                                    
+              <div class = "row mx-auto">
+                      <img src="/img/ched3.png" class="img-responsive">                    
+                      </div>                      
               </div>
 
 

@@ -27,6 +27,8 @@
                                 <th>Tracking #</th>
                                 <th>Program</th>
                                 <th>Date Filed</th>
+                                 <th>Date Received</th>
+                                 <th>Date Validated</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -46,8 +48,31 @@
                                 </td>
 
                                 <td>
-                                    {{ \Carbon\Carbon::parse($item->filed_at)->format('d M Y h:i A') }}
+                                    @if ($item->filed_at === NULL)
+                                    ---
+                                    @else
+                                        {{ \Carbon\Carbon::parse($item->filed_at)->format('d M Y h:i A') }}
+                                    @endif
                                 </td>
+
+
+                                <td>
+                                    @if ($item->received_at === NULL)
+                                        ---
+                                    @else
+                                        {{ \Carbon\Carbon::parse($item->received_at)->format('d M Y h:i A') }}
+                                    @endif
+                                </td>
+
+                                   <td>
+                                    @if ($item->validated_at === NULL)
+                                    ---
+                                    @else
+                                    {{ \Carbon\Carbon::parse($item->validated_at)->format('d M Y h:i A') }}
+                                    @endif
+                                </td>
+
+
 
                                 <td>
 

@@ -8,6 +8,13 @@
             <div class="card-header">
                 <h4>Educational Institutions</h4>
                 <div class="card-header-action">
+
+                    <a class="btn btn-primary" 
+                        href="{{ route('offeredcourse.create') }}" >
+                        <i class="fa fa-plus"></i>
+                        Create New Record
+                    </a>
+
                     
 
                     <button class="btn btn-info"
@@ -89,10 +96,10 @@
                                 <td>
                                     <div class="btn-group">
                                         
-                                        <a href="{{ route('offeredcourse.edit', ['hash' => $item->hashId()]) }}" 
+                                        <a href="{{ route('school.edit', ['hash' => $item->hashId()]) }}" 
                                             class="btn btn-sm btn-info">
                                             <i class="fas fa-edit"></i>
-                                            
+                                             
                                         </a>
                                                                                 
                                     </div>
@@ -100,7 +107,7 @@
                         </tr>
                         @endforeach
                     </tbody>
-                </table>
+                </table> 
             </div>
             {{ $data->links() }}
 

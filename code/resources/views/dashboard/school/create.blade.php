@@ -64,6 +64,7 @@
                     </div>
 
 
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label text-md-right">Province</label>
                         <div class="col-md-9">
@@ -106,7 +107,7 @@
                     </div>
 
 
-                    <div class="form-group row">
+                  <!--   <div class="form-group row">
                         <label class="col-md-3 col-form-label text-md-right">Government Recognition Number</label>
 
                         <div class="col-md-9">
@@ -115,7 +116,7 @@
                                                                  'required' => '' ])          
                         </div>
                     </div>
-
+ -->
 
                     <hr/>
 

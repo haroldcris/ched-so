@@ -51,9 +51,8 @@
                     <hr/>
 
 
-
                     <div class="card-footer text-right">
-                        <a class="btn btn-light btn-lg" href=""> 
+                        <a class="btn btn-light btn-lg" href="{{ route('home') }}"> 
                             Cancel
                         </a>
                         &nbsp;

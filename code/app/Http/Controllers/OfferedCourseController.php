@@ -11,20 +11,21 @@ use App\Models\SchoolCourse;
 use App\Models\School;
 
 
+
 class OfferedCourseController extends Controller
 {
 
 	private function rules($item)
 	{
 		$rules  =[
-			'code'  		=> ['required', 'max:20', Rule::unique('course', 'code')],
-			'description'   => ['required', 'max:200', Rule::unique('course', 'description')],
+			'schoolId'  		=> ['required'],
+			'courseId'   => ['required'],
 		];
 
 		if(isset($item)) 
         {   
-        	$rules['code'] = ['required',Rule::unique('course','code')->ignore($item->code,'code')];     	
-            $rules['description'] = ['required',Rule::unique('course','description')->ignore($item->description,'description')];
+        	$rules['schoolId'] = ['required'.$item->code.',schoolId'];     	
+            $rules['courseId'] = ['required'.$item->courseId.',courseId'];
         }
 
         return $rules;
@@ -44,7 +45,7 @@ class OfferedCourseController extends Controller
 		return view('dashboard.offeredcourse.create');
 	}
 
-	public function edit($hash)
+	public function edit($hash) 
 	{
 		$id = SchoolCourse::decodeHash($hash);
 		$item = User::where('id', $value)->firstOrFail();
@@ -63,8 +64,14 @@ class OfferedCourseController extends Controller
 	}
 	
 	public function store(Request $request)
-	{
-		 
+    {        
+        $request->validate($this->rules(null));
 
-	}
+        $data = array_merge($request->all(),['updated_by' => \Auth::user()->username,
+                                             'created_by' => \Auth::user()->username]);
+        SchoolCourse::create($data);
+
+        $request->session()->flash('message', 'Record has been created');
+        return redirect()->route('offerredcourse.index');
+    }
 }
